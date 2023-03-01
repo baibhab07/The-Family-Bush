@@ -47,7 +47,7 @@ function Register() {
     e.preventDefault()
     const { name, email, password, confirmPassword, familyName } = user
 
-    const res = await fetch('/createFamily', {
+    const res = await fetch('/api/families/createFamily', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ function Register() {
     if (data.status === 422 || !data) {
       window.alert('Invalid Registration') // eslint-disable-line no-alert
     } else {
-      window.alert('Registation Successful') // eslint-disable-line no-alert
+      window.alert('Registration Successful') // eslint-disable-line no-alert
       navigate('/login')
     }
   }
@@ -74,7 +74,7 @@ function Register() {
     e.preventDefault()
     const { name, email, password, confirmPassword, familyId } = user
 
-    const res = await fetch('/joinFamily', {
+    const res = await fetch('/api/families/joinFamily', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

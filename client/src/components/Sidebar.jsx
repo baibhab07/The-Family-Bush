@@ -1,14 +1,14 @@
-import {
-  CalendarMonth,
-  Collections,
-  FamilyRestroom,
-  FormatListBulleted,
-  Forum,
-  LocationOn,
-  Paid,
-} from '@mui/icons-material'
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React from 'react'
+import { Link } from 'react-router-dom'
+import {
+  FormatListBulleted,
+  CalendarMonth,
+  Message,
+  Paid,
+  Collections,
+  LocationOn,
+  ExitToApp,
+} from '@mui/icons-material'
 
 function Sidebar() {
   return (
@@ -16,62 +16,76 @@ function Sidebar() {
       <Box position='fixed'>
         <List>
           <ListItem disablePadding />
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#family'>
-              <ListItemIcon>
-                <FamilyRestroom />
-              </ListItemIcon>
-              <ListItemText primary='Family' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#tasks'>
-              <ListItemIcon>
-                <FormatListBulleted />
-              </ListItemIcon>
-              <ListItemText primary='Tasks' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#calendar'>
-              <ListItemIcon>
-                <CalendarMonth />
-              </ListItemIcon>
-              <ListItemText primary='Calendar' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#gallery'>
-              <ListItemIcon>
-                <Collections />
-              </ListItemIcon>
-              <ListItemText primary='Gallery' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#message'>
-              <ListItemIcon>
-                <Forum />
-              </ListItemIcon>
-              <ListItemText primary='Message' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#expense'>
-              <ListItemIcon>
-                <Paid />
-              </ListItemIcon>
-              <ListItemText primary='Expense' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component='a' href='#location'>
-              <ListItemIcon>
-                <LocationOn />
-              </ListItemIcon>
-              <ListItemText primary='Location' />
-            </ListItemButton>
-          </ListItem>
+          <Link to='/todo' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <FormatListBulleted />
+                </ListItemIcon>
+                <ListItemText primary='Todo' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/calendar' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <CalendarMonth />
+                </ListItemIcon>
+                <ListItemText primary='Calendar' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/message' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Message />
+                </ListItemIcon>
+                <ListItemText primary='Message' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/expense' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Paid />
+                </ListItemIcon>
+                <ListItemText primary='Expense' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/gallery' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Collections />
+                </ListItemIcon>
+                <ListItemText primary='Gallery' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/location' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <LocationOn />
+                </ListItemIcon>
+                <ListItemText primary='Location' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/logout' style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ExitToApp />
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         </List>
       </Box>
     </Box>
