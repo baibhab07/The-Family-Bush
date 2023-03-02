@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const familyRoute = require("./routes/family/family");
 const loginRoute = require("./routes/authentication/login");
 const locationRoute = require("./routes/location/location");
+const todoRoute = require("./routes/todo/todo");
+const getDataRoute = require("./routes/getData/getData");
 
 //middleware
 require("dotenv").config();
@@ -21,9 +23,11 @@ mongoose
   .catch((err) => console.log(err));
 
 //linking router files
+app.use("/api/getData", getDataRoute);
 app.use("/api/families", familyRoute);
 app.use("/api/login", loginRoute);
 app.use("/api/locations", locationRoute);
+app.use("/api/todos", todoRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Listening on port", process.env.PORT);

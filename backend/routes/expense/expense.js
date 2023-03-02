@@ -1,4 +1,3 @@
-const express = requie;
 const router = require("express").Router();
 
 const Expense = require("../../models/expenseSchema");

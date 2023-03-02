@@ -13,6 +13,7 @@ const authenticate = async (req, res, next) => {
     }
     req.token = token;
     req.rootUser = rootUser;
+    console.log(req.rootUser);
     req.userId = rootUser._id;
     next();
   } catch (e) {

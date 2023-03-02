@@ -37,7 +37,7 @@ function Header() {
                   Register
                 </Button>
               </Link>
-              <Link to='/register'>
+              <Link to='/login'>
                 <Button
                   variant='outlined'
                   sx={{

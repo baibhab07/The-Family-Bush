@@ -25,6 +25,8 @@ function Login() {
       window.alert('Invalid Registration') // eslint-disable-line no-alert
     } else {
       window.alert('Login Successful') // eslint-disable-line no-alert
+      console.log(data)
+      localStorage.setItem('token', data.token)
       navigate('/homePage')
     }
   }

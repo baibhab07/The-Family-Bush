@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { flexCenter } from '../themes/commonStyles'
@@ -9,15 +10,16 @@ function HomePage() {
 
   const homePage = async () => {
     try {
-      const res = await fetch('/getData', {
+      const res = await fetch('/api/getData', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       })
       const data = await res.json()
-      console.log(data)
       setName(data.name)
+      localStorage.setItem('userId', data._id)
+      localStorage.setItem('familyId', data.family)
     } catch (err) {
       console.log(err)
     }

@@ -5,17 +5,13 @@ const todoSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  completed: {
-    type: Boolean,
-    default: false,
-  },
-  createdAt: {
-    type: String,
-    required: true,
-  },
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  family: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Family",
   },
 });
 

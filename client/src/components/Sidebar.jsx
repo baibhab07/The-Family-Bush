@@ -16,7 +16,7 @@ function Sidebar() {
       <Box position='fixed'>
         <List>
           <ListItem disablePadding />
-          <Link to='/todo' style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to='/todos' style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>

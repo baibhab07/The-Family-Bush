@@ -37,6 +37,11 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+// a static method to find all users in a family
+userSchema.statics.findUsersInFamily = async function (familyId) {
+  return this.find({ family: familyId });
+};
+
 // hashing the password
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {

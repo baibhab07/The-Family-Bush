@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
       if (!isMatch) {
         res.status(400).json({ error: "Invalid Credentials" });
       } else {
-        res.json({ message: "Logged in successfully" });
+        res.json({ message: "Logged in successfully", token });
       }
     } else {
       res.status(400).json({ error: "Invalid Credentials" });
