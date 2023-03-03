@@ -26,16 +26,12 @@ router.post("/", authenticate, async (req, res) => {
 router.get("/", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    console.log("Request body User:", user);
     // Get the family Id of the user
     const familyId = user.family;
-    console.log("Family ID of the user:", familyId);
     // Find all the users that belong to the given familyId
     const users = await User.find({ family: familyId });
-    console.log("Users that belong to the FamilyId:", users);
     // Extract the user IDs from the user documents
     const userIds = users.map((user) => user._id);
-    console.log("Every user with the same family id:", userIds);
     // Find all the todos that were created by the extracted user IDs
     const todos = await Todo.find({ createdBy: { $in: userIds } });
     res.status(200).json(todos);

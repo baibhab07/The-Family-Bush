@@ -13,7 +13,6 @@ import {
   ListItemText,
 } from '@mui/material'
 import axios from 'axios'
-import authAxios from '../authAxios'
 
 const useStyles = makeStyles({
   root: {
@@ -71,7 +70,7 @@ function TodoList() {
   }
 
   const getTodos = () => {
-    authAxios
+    axios
       .get('/api/todos')
       .then((response) => {
         setTodos(response.data.todos)

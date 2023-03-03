@@ -131,6 +131,7 @@ function Location() {
                   color: 'red',
                   cursor: 'pointer',
                 }}
+                onClick={handleMarkerClick(newPlace._id, newPlace.long, newPlace.lat)}
               />
             </Marker>
             <Popup
