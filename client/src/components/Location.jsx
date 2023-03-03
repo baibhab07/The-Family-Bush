@@ -3,7 +3,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import Map, { FullscreenControl, Marker, NavigationControl, Popup } from 'react-map-gl'
+import Map, {
+  FullscreenControl,
+  GeolocateControl,
+  Marker,
+  NavigationControl,
+  Popup,
+} from 'react-map-gl'
 import RoomIcon from '@mui/icons-material/Room'
 import { Box, Typography } from '@mui/material'
 import axios from 'axios'
@@ -150,6 +156,7 @@ function Location() {
         )}
         <NavigationControl />
         <FullscreenControl />
+        <GeolocateControl positionOptions={{ enableHighAccuracy: true }} />
       </Map>
     </div>
   )
