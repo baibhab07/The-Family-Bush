@@ -20,33 +20,19 @@ function Location() {
     zoom: 6,
   })
 
-  const getLocations = React.useCallback(async () => {
-    try {
-      const allLocations = await axios.get('/api/locations')
-      setLocations(allLocations.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    getLocations()
-  }, [getLocations])
-
   const handleMarkerClick = React.useCallback(
-    (id, longitude, latitude) => () => {
+    (id, lat, long) => () => {
       setcurrentLocationId(id)
-      setViewState({ ...viewState, longitude, latitude })
+      setViewState({ ...viewState, latitude: lat, longitude: long })
     },
     [],
   )
 
-  const handleAddClick = (e) => () => {
-    console.log(e)
-    const [longitude, latitude] = e.lngLat
+  const handleAddClick = (event) => {
+    console.log(event)
     setNewPlace({
-      lat: latitude,
-      long: longitude,
+      lat: event.lngLat.lat,
+      long: event.lngLat.lng,
     })
   }
 
@@ -54,8 +40,8 @@ function Location() {
     e.preventDefault()
     const newLocation = {
       address,
-      lat: newPlace.latitude,
-      long: newPlace.longitude,
+      lat: newPlace.lat,
+      long: newPlace.long,
     }
     try {
       const res = await axios.post('/api/locations', newLocation)
@@ -66,11 +52,25 @@ function Location() {
     }
   }
 
+  const getLocations = React.useCallback(async () => {
+    try {
+      const allLocations = await axios.get('/api/locations')
+      setLocations(allLocations.data)
+      console.log(locations)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    getLocations()
+  }, [])
+
   return (
     <div className='App'>
       <Map
         {...viewState}
-        onMove={(nextViewState) => setViewState(nextViewState)}
+        onMove={(evt) => setViewState(evt.viewState)}
         style={{ width: '100vw', height: '100vh', borderRadius: '15px', border: '2px solid red' }}
         mapStyle='mapbox://styles/mapbox/streets-v9'
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
@@ -79,24 +79,25 @@ function Location() {
         {locations.map((location) => (
           <>
             <Marker
-              longitude={location.longitude}
-              latitude={location.latitude}
-              offsetLeft={-20}
-              offsetTop={-10}
+              longitude={location.long}
+              latitude={location.lat}
+              offsetLeft={-3.5 * viewState.zoom}
+              offsetTop={-7 * viewState.zoom}
             >
               <RoomIcon
                 style={{ fontSize: viewState.zoom * 7, color: 'red', cursor: 'pointer' }}
-                onClick={handleMarkerClick(location._id, location.longitude, location.latitude)}
+                onClick={handleMarkerClick(location._id, location.long, location.lat)}
               />
             </Marker>
             {location._id === currentLocationId && (
               <Popup
-                longitude={location.longitude}
-                latitude={location.latitude}
-                anchor='left'
+                key={location._id}
+                longitude={location.long}
+                latitude={location.lat}
                 closeButton
                 closeOnClick={false}
                 onClose={() => setcurrentLocationId(null)}
+                anchor='left'
               >
                 <Box>
                   <Typography variant='h6'>Address</Typography>
@@ -111,25 +112,41 @@ function Location() {
           </>
         ))}
         {newPlace && (
-          <Popup
-            longitude={newPlace.long}
-            latitude={newPlace.lat}
-            anchor='left'
-            closeButton
-            closeOnClick={false}
-            onClose={() => setNewPlace(null)}
-          >
-            <Box>
-              <form onSubmit={handleSubmit}>
-                <label>Address</label>
-                <input
-                  placeholder='Enter your address'
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-                <button type='submit'>Add Location</button>
-              </form>
-            </Box>
-          </Popup>
+          <>
+            <Marker
+              latitude={newPlace.lat}
+              longitude={newPlace.long}
+              offsetLeft={-3.5 * viewState.zoom}
+              offsetTop={-7 * viewState.zoom}
+            >
+              <RoomIcon
+                style={{
+                  fontSize: 7 * viewState.zoom,
+                  color: 'red',
+                  cursor: 'pointer',
+                }}
+              />
+            </Marker>
+            <Popup
+              longitude={newPlace.long}
+              latitude={newPlace.lat}
+              anchor='left'
+              closeButton
+              closeOnClick={false}
+              onClose={() => setNewPlace(null)}
+            >
+              <Box>
+                <form onSubmit={handleSubmit}>
+                  <label>Address</label>
+                  <input
+                    placeholder='Enter your address'
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                  <button type='submit'>Add Location</button>
+                </form>
+              </Box>
+            </Popup>
+          </>
         )}
         <NavigationControl />
         <FullscreenControl />

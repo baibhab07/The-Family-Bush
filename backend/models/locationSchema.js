@@ -10,11 +10,11 @@ const locationSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    latitude: {
+    lat: {
       type: Number,
       require: true,
     },
-    longitude: {
+    long: {
       type: Number,
       require: true,
     },

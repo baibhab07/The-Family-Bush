@@ -1,7 +1,8 @@
 const User = require("../../models/userSchema");
 const Family = require("../../models/familySchema");
 const router = require("express").Router();
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 //CREATE FAMILY
 router.post("/createFamily", async (req, res) => {
   const { name, email, password, confirmPassword, familyName } = req.body;
@@ -17,21 +18,33 @@ router.post("/createFamily", async (req, res) => {
     } else if (password != confirmPassword) {
       return res.status(422).json({ error: "Entered passwords do not match" });
     } else {
-      const newFamily = new Family({ familyName });
-      const newUser = new User({
+      // Saving Family Details
+      const newFamily = await Family.create({ familyName });
+      // Hashing Password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10);
+      // Saving User Details
+      const newUser = await User.create({
         name,
         email,
-        password,
-        confirmPassword,
+        password: hashedPassword,
+        confirmPassword: hashedConfirmPassword,
         family: newFamily._id,
       });
-      await newFamily.save();
-      // bcrypting done here
+      // Token generation
+      const token = jwt.sign(
+        { email: newUser.email, id: newUser._id },
+        process.env.SECRET_KEY
+      );
+      //Update user document with a token
+      newUser.token = token;
       await newUser.save();
       //respond with success message
-      res
-        .status(201)
-        .json({ message: "Family and user created successfully." });
+      res.status(201).json({
+        message: "User and family created.",
+        user: newUser,
+        token: token,
+      });
     }
   } catch (err) {
     if (err.name === "ValidationError") {
@@ -69,16 +82,31 @@ router.post("/joinFamily", async (req, res) => {
     if (!checkFamily) {
       return res.status(404).json({ error: "Family not found" });
     }
+    // Hashing Password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10);
     // create a new user
-    const newUser = new User({
+    const newUser = await User.create({
       name,
       email,
-      password,
-      confirmPassword,
+      password: hashedPassword,
+      confirmPassword: hashedConfirmPassword,
       family: familyId,
     });
+
+    // Token generation
+    const token = jwt.sign(
+      { email: newUser.email, id: newUser._id },
+      process.env.SECRET_KEY
+    );
+    // Update user document with token
+    newUser.token = token;
     await newUser.save();
-    res.status(201).json({ message: "User created and joined to a family." });
+    res.status(201).json({
+      message: "User created and joined to a family.",
+      user: newUser,
+      token: token,
+    });
   } catch (err) {
     // Mongoose validation error
     if (err.name === "ValidationError") {

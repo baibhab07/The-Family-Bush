@@ -1,50 +1,43 @@
 const router = require("express").Router();
 
+const authenticate = require("../../middleware/authenticate");
 const Expense = require("../../models/expenseSchema");
+const User = require("../../models/userSchema");
 
 // GET EXPENSE
-router.get("/", async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   try {
-    const expenses = await Expense.find();
-
-    return res.status(200).json({
-      success: true,
-      count: expenses.length,
-      data: expenses,
-    });
+    const user = await User.findById(req.userId);
+    // Get the family Id of the user
+    const familyId = user.family;
+    // Find all the users that belong to the given familyId
+    const users = await User.find({ family: familyId });
+    // Extract the user IDs from the user documents
+    const userIds = users.map((user) => user._id);
+    // Find all the todos that were created by the extracted user IDs
+    const expenses = await Expense.find({ createdBy: { $in: userIds } });
+    return res.status(200).json(expenses);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: "Server Error",
-    });
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
 
 // ADD AN EXPENSE
-router.post("/", async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
+  const { name, amount } = req.body;
+
+  const newExpense = new Expense({
+    name,
+    amount,
+    createdBy: req.userId,
+  });
   try {
-    const { name, amount } = req.body;
-
-    const expense = await Expense.create(req.body);
-
-    return res.status(201).json({
-      success: true,
-      data: expense,
-    });
+    await newExpense.save();
+    return res.status(201).json(newExpense);
   } catch (err) {
-    if (err.name === "ValidationError") {
-      const messages = Object.values(err.errors).map((val) => val.message);
-
-      return res.status(400).json({
-        success: false,
-        error: messages,
-      });
-    } else {
-      return res.status(500).json({
-        success: false,
-        error: "Server Error",
-      });
-    }
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
 
