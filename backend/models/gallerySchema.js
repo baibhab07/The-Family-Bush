@@ -1,22 +1,14 @@
 const mongoose = require("mongoose");
 
-const gallerySchema = mongoose.Schema({
-  title: {
-    type: String,
+const gallerySchema = mongoose.Schema(
+  {
+    photo: {
+      type: String,
+      required: true,
+    },
   },
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
+  { timestamps: true }
+);
 
 const Gallery = mongoose.model("GALLERY", gallerySchema);
 

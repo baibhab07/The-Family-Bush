@@ -6,11 +6,13 @@ const familyRoute = require("./routes/family/family");
 const loginRoute = require("./routes/authentication/login");
 const locationRoute = require("./routes/location/location");
 const todoRoute = require("./routes/todo/todo");
+const galleryRoute = require("./routes/gallery/gallery");
 const getDataRoute = require("./routes/getData/getData");
 
 //middleware
 require("dotenv").config();
 app.use(express.json());
+app.use(express.static("public"));
 
 app.use((req, res, next) => {
   console.log("HTTP Method - " + req.method + " , URL - " + req.url);
@@ -31,6 +33,7 @@ app.use("/api/families", familyRoute);
 app.use("/api/login", loginRoute);
 app.use("/api/locations", locationRoute);
 app.use("/api/todos", todoRoute);
+app.use("/api/photos", galleryRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Listening on port", process.env.PORT);

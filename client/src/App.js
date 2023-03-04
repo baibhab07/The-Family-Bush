@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Location from './components/Location'
 import Welcome from './components/Welcome'
 import Todos from './components/Todos'
+import Gallery from './components/Gallery/Gallery'
 
 function App() {
   return (
@@ -14,11 +15,10 @@ function App() {
       <Route exact path='/homePage' element={<HomePage />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/' element={<Location />} />
       <Route path='/location' element={<Location />} />
       <Route path='/todos' element={<Todos />} />
       {/* <Route path='/expense' element={<Expense />} /> */}
-      <Route path='/location' element={<Location />} />
+      <Route path='/gallery' element={<Gallery />} />
     </Routes>
   )
 }
