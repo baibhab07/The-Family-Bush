@@ -6,9 +6,9 @@ const authenticate = async (req, res, next) => {
     if (token) {
       token = token.split(" ")[1];
       let user = jwt.verify(token, process.env.SECRET_KEY);
-      req.userId = user.id;
+      req.userId = user._id;
     } else {
-      res.status(401).json({ message: "Unauthorized User" });
+      return res.status(401).json({ message: "Unauthorized User" });
     }
     next();
   } catch (error) {

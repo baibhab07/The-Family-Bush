@@ -11,11 +11,11 @@ const locationSchema = mongoose.Schema(
       ref: "User",
     },
     lat: {
-      type: Number,
+      type: String,
       require: true,
     },
     long: {
-      type: Number,
+      type: String,
       require: true,
     },
   },
