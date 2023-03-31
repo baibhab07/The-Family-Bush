@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        const user = jwtDecode(accessToken)
+        const user = jwtDecode(accessToken);
 
         dispatch({
           type: 'INITIAL',

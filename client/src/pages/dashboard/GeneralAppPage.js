@@ -2,12 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Grid } from '@mui/material';
 import { useAuthContext } from '../../auth/useAuthContext';
 import { useSettingsContext } from '../../components/settings';
-import {
-  AppWelcome,
-  AppDetails
-} from '../../sections/@dashboard/general/app';
+import { AppWelcome, AppDetails } from '../../sections/@dashboard/general/app';
 import { SeoIllustration } from '../../assets/illustrations';
-
 
 export default function GeneralAppPage() {
   const { user } = useAuthContext();
@@ -17,7 +13,7 @@ export default function GeneralAppPage() {
   return (
     <>
       <Helmet>
-        <title> FYP </title>
+        <title> Dashboard </title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -39,24 +35,14 @@ export default function GeneralAppPage() {
           </Grid>
         </Grid>
 
-
-        <Grid container  style={{marginTop: '20px'}}>
+        <Grid container style={{ marginTop: '20px' }}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppDetails
-              title="Family"
-              content={user.familyName}
-              icon={'carbon:pedestrian-family'}
-            />
+            <AppDetails title="Family" content={user.familyName} icon={'carbon:pedestrian-family'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3} style={{marginLeft: '20px'}}>
-            <AppDetails
-              title="Family ID"
-              content={user.family}
-              icon={'mdi:id-card-outline'}
-            />
+          <Grid item xs={12} sm={6} md={3} style={{ marginLeft: '20px' }}>
+            <AppDetails title="Family ID" content={user.family} icon={'mdi:id-card-outline'} />
           </Grid>
-          
         </Grid>
       </Container>
     </>

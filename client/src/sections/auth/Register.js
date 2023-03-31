@@ -12,7 +12,7 @@ import AuthRegisterForm from './AuthRegisterForm';
 
 export default function Register() {
   return (
-    <LoginLayout title="Register now to join the family bush.">
+    <LoginLayout title="Register Now To Join The Family Bush.">
       <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
         <Typography variant="h4">Get started.</Typography>
 

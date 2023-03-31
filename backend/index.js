@@ -1,9 +1,9 @@
 const express = require("express");
-var cors = require('cors')
+var cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
- 
-app.use(cors())
+
+app.use(cors());
 
 const familyRoute = require("./routes/family/family");
 const loginRoute = require("./routes/authentication/login");

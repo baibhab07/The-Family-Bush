@@ -14,7 +14,7 @@ import { useAuthContext } from '../../auth/useAuthContext';
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField, RHFCheckbox } from '../../components/hook-form';
 import axios from '../../utils/axios';
-import { PATH_AUTH } from '../../routes/paths'
+import { PATH_AUTH } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -30,16 +30,16 @@ export default function AuthRegisterForm() {
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
     newFamily: Yup.boolean().optional(),
-    familyName: Yup.string().when(("newFamily"), {
+    familyName: Yup.string().when('newFamily', {
       is: (newFamily) => newFamily === true,
       then: Yup.string().required('Family name is required'),
-      otherwise: Yup.string().optional()
+      otherwise: Yup.string().optional(),
     }),
-    familyId: Yup.string().when(("newFamily"), {
+    familyId: Yup.string().when('newFamily', {
       is: (newFamily) => newFamily === false,
       then: Yup.string().required('Family ID is required'),
-      otherwise: Yup.string().optional()
-    })
+      otherwise: Yup.string().optional(),
+    }),
   });
 
   const defaultValues = {
@@ -48,12 +48,12 @@ export default function AuthRegisterForm() {
     password: '',
     newFamily: true,
     familyName: '',
-    familyId: ''
+    familyId: '',
   };
 
   const methods = useForm({
     resolver: yupResolver(RegisterSchema),
-    defaultValues
+    defaultValues,
   });
 
   const {
@@ -69,16 +69,16 @@ export default function AuthRegisterForm() {
     try {
       let res;
       const d = data;
-      delete d.newFamily
+      delete d.newFamily;
       if (newFamily) {
-        delete d.familyId
+        delete d.familyId;
         res = await axios.post('/families/createFamily', d);
       } else {
-        delete d.familyName
+        delete d.familyName;
         res = await axios.post('/families/joinFamily', d);
       }
-      toast.success(res.data.message || "Registered successfully.", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.success(res.data.message || 'Registered successfully.', {
+        position: toast.POSITION.TOP_RIGHT,
       });
       reset();
       navigate(PATH_AUTH.login, { replace: true });
@@ -87,16 +87,16 @@ export default function AuthRegisterForm() {
       reset();
       setError('afterSubmit', {
         ...error,
-        message: error.message || "Internal server error",
+        message: error.message || 'Internal server error',
       });
     }
   };
 
   const handleCheckbox = () => {
     setNewFamily(!newFamily);
-    setValue("familyName", "");
-    setValue("familyId", "");
-  }
+    setValue('familyName', '');
+    setValue('familyId', '');
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -122,23 +122,17 @@ export default function AuthRegisterForm() {
           }}
         />
 
-        <RHFCheckbox
-          name="newFamily"
-          onClick={handleCheckbox}
-          label="is a new family?"
-        />
+        <RHFCheckbox name="newFamily" onClick={handleCheckbox} label="New Family?" />
 
-        {
-          getValues("newFamily") ? (
-            <>
-              <RHFTextField name="familyName" label="Family name" />
-            </>
-          ) : (
-            <>
-              <RHFTextField name="familyId" label="Family ID" />
-            </>
-          )
-        }
+        {getValues('newFamily') ? (
+          <>
+            <RHFTextField name="familyName" label="Family name" />
+          </>
+        ) : (
+          <>
+            <RHFTextField name="familyId" label="Family ID" />
+          </>
+        )}
 
         <LoadingButton
           fullWidth

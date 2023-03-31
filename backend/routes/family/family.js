@@ -38,18 +38,18 @@ router.post("/createFamily", async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         family: newUser.family,
-        _id: newUser._id
+        _id: newUser._id,
       };
 
       //respond with success message
       return res.status(200).json({
         status: true,
-        message: "User and family created."
+        message: "User and family created.",
       });
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -68,7 +68,9 @@ router.post("/joinFamily", async (req, res) => {
     // check if the family exists
     const checkFamily = await Family.findOne({ _id: familyId });
     if (!checkFamily) {
-      return res.status(404).json({ message: "Family not found", status: false });
+      return res
+        .status(404)
+        .json({ message: "Family not found", status: false });
     }
     // Hashing Password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -93,7 +95,7 @@ router.post("/joinFamily", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 

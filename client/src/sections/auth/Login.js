@@ -4,10 +4,9 @@ import { PATH_AUTH } from '../../routes/paths';
 import LoginLayout from '../../layouts/login';
 import AuthLoginForm from './AuthLoginForm';
 
-
 export default function Login() {
   return (
-    <LoginLayout title='Welcome to the family bush.'>
+    <LoginLayout title="Welcome To The Family Bush.">
       <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
         <Typography variant="h4">Sign in</Typography>
 
@@ -18,7 +17,6 @@ export default function Login() {
             Create an account
           </Link>
         </Stack>
-
       </Stack>
       <AuthLoginForm />
     </LoginLayout>
