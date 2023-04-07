@@ -14,8 +14,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import Iconify from '../../../components/iconify';
 import { ColorSinglePicker } from '../../../components/color-utils';
 import FormProvider, { RHFTextField, RHFSwitch } from '../../../components/hook-form';
-import { useAuthContext } from '../../../auth/useAuthContext'
-
+import { useAuthContext } from '../../../auth/useAuthContext';
 
 const getInitialValues = (event) => {
   const initialEvent = {
@@ -78,18 +77,17 @@ export default function CalendarForm({ event, onCreateUpdateEvent, onDeleteEvent
 
       reset();
     } catch (error) {
-      toast.error(error.message || "An error occured", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.error(error.message || 'An error occured', {
+        position: toast.POSITION.TOP_RIGHT,
       });
     }
   };
 
-  const isDateError =
-    values.start && values.end ? isBefore(new Date(values.end), new Date(values.start)) : false;
+  const isDateError = values.start && values.end ? isBefore(new Date(values.end), new Date(values.start)) : false;
 
-   console.log(event) 
+  console.log(event);
 
-  const viewOnly = event && ((event?.createdBy.toString()) !== (user._id.toString()))
+  const viewOnly = event && event?.createdBy.toString() !== user._id.toString();
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

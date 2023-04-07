@@ -13,7 +13,7 @@ const ICONS = {
   dashboard: icon('ic_dashboard'),
   gallery: icon('ic_gallery'),
   location: icon('ic_location'),
-  transaction: icon('ic_cash')
+  transaction: icon('ic_cash'),
 };
 
 const navConfig = [
@@ -23,13 +23,13 @@ const navConfig = [
       { title: 'app', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: 'gallery', path: PATH_DASHBOARD.general.gallery, icon: ICONS.gallery },
       {
-        title: 'todos',
+        title: 'to-dos',
         path: PATH_DASHBOARD.todos.root,
         icon: ICONS.file,
         children: [
           { title: 'list', path: PATH_DASHBOARD.todos.list },
           { title: 'create', path: PATH_DASHBOARD.todos.new },
-        ]
+        ],
       },
       {
         title: 'locations',
@@ -38,7 +38,7 @@ const navConfig = [
         children: [
           { title: 'list', path: PATH_DASHBOARD.location.list },
           { title: 'create', path: PATH_DASHBOARD.location.new },
-        ]
+        ],
       },
       {
         title: 'transactions',
@@ -47,7 +47,7 @@ const navConfig = [
         children: [
           { title: 'list', path: PATH_DASHBOARD.transactions.list },
           { title: 'create', path: PATH_DASHBOARD.transactions.new },
-        ]
+        ],
       },
       {
         title: 'chat',

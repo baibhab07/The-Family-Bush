@@ -30,8 +30,7 @@ import {
   CalendarToolbar,
   CalendarFilterDrawer,
 } from '../../sections/@dashboard/calendar';
-import axios from '../../utils/axios'
-
+import axios from '../../utils/axios';
 
 export default function CalendarPage() {
   const { enqueueSnackbar } = useSnackbar();
@@ -48,9 +47,9 @@ export default function CalendarPage() {
 
   const [view, setView] = useState(isDesktop ? 'dayGridMonth' : 'listWeek');
 
-  const [userEvents, setUserEvents] = useState([])
+  const [userEvents, setUserEvents] = useState([]);
 
-  const [selEvent, setSelEvent] = useState(null)
+  const [selEvent, setSelEvent] = useState(null);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -101,18 +100,18 @@ export default function CalendarPage() {
   };
 
   const filterEvent = (eventid) => {
-    const calendarApi = calendarRef.current.getApi()
-    const events = calendarApi.getEvents()
+    const calendarApi = calendarRef.current.getApi();
+    const events = calendarApi.getEvents();
     const eventData = events.map((e) => ({
       start: e.start,
       end: e.end,
       title: e.title,
       id: e.id,
-      createdBy: e.extendedProps.createdBy
-    }))
-    const event = eventData?.filter((e) => e.id === eventid)
+      createdBy: e.extendedProps.createdBy,
+    }));
+    const event = eventData?.filter((e) => e.id === eventid);
     return event[0];
-  }
+  };
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -128,25 +127,25 @@ export default function CalendarPage() {
     const ev = filterEvent(eid);
     setSelEvent(ev);
     handleOpenModal();
-  }
+  };
 
   const addCalenderEvent = (event) => {
-    const calendarApi = calendarRef.current.getApi()
+    const calendarApi = calendarRef.current.getApi();
     calendarApi.addEvent(event);
-  }
+  };
 
   const removeCalenderEvent = (eventId) => {
-    const calendarApi = calendarRef.current.getApi()
+    const calendarApi = calendarRef.current.getApi();
     const event = calendarApi.getEventById(eventId);
     event.remove();
-  }
+  };
 
   const updateCalenderEvent = (eventId, data) => {
-    const calendarApi = calendarRef.current.getApi()
+    const calendarApi = calendarRef.current.getApi();
     const event = calendarApi.getEventById(eventId);
-    event.setDates(data.start,data.end)
-    event.setProp('title',data.title);
-  }
+    event.setDates(data.start, data.end);
+    event.setProp('title', data.title);
+  };
 
   const handleDeleteEvent = async () => {
     try {
@@ -155,8 +154,8 @@ export default function CalendarPage() {
       handleCloseModal();
       enqueueSnackbar('Event deleted.', { variant: 'success' });
     } catch (error) {
-      toast.error(error.message || "An error occured", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.error(error.message || 'An error occured', {
+        position: toast.POSITION.TOP_RIGHT,
       });
     }
   };
@@ -164,20 +163,20 @@ export default function CalendarPage() {
   const fetchEvents = async () => {
     try {
       const d = await axios.get(`/events`);
-      setUserEvents(d.data)
+      setUserEvents(d.data);
     } catch (error) {
-      toast.error(error.message || "An error occured", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.error(error.message || 'An error occured', {
+        position: toast.POSITION.TOP_RIGHT,
       });
     }
-  }
+  };
 
   const handleCreateUpdateEvent = async (newEvent) => {
     try {
       if (selEvent) {
         const d = await axios.put(`/events/${selEvent.id}`, newEvent);
         updateCalenderEvent(selEvent.id, d.data);
-        handleCloseModal()
+        handleCloseModal();
         enqueueSnackbar('Event updated.', { variant: 'success' });
       } else {
         const d = await axios.post(`/events`, newEvent);
@@ -186,15 +185,15 @@ export default function CalendarPage() {
         handleCloseModal();
       }
     } catch (error) {
-      toast.error(error.message || "An error occured", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.error(error.message || 'An error occured', {
+        position: toast.POSITION.TOP_RIGHT,
       });
     }
   };
 
   useEffect(() => {
     fetchEvents();
-  }, [])
+  }, []);
 
   return (
     <>

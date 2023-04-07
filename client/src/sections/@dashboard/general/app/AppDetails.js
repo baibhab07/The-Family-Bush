@@ -18,7 +18,7 @@ AppDetails.propTypes = {
   content: PropTypes.string,
 };
 
-export default function AppDetails({ title,content, icon, color = 'primary', sx, ...other }) {
+export default function AppDetails({ title, content, icon, color = 'primary', sx, ...other }) {
   const theme = useTheme();
 
   return (
@@ -29,6 +29,7 @@ export default function AppDetails({ title,content, icon, color = 'primary', sx,
         color: (theme) => theme.palette[color].darker,
         bgcolor: (theme) => theme.palette[color].lighter,
         ...sx,
+        width: '330px',
       }}
       {...other}
     >

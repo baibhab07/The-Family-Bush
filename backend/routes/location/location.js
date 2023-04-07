@@ -20,7 +20,7 @@ router.get("/", authenticate, async (req, res) => {
         lat: t.lat,
         long: t.long,
         createdBy: t.createdBy,
-        createdAt: t.createdAt
+        createdAt: t.createdAt,
       };
     });
     for (let i = 0; i < locations.length; i++) {
@@ -36,7 +36,7 @@ router.get("/", authenticate, async (req, res) => {
 
 router.post("/", authenticate, async (req, res) => {
   try {
-    const { address, lat, long } = req.body
+    const { address, lat, long } = req.body;
     const newLocation = new Location({
       address,
       createdBy: req.userId,
@@ -56,15 +56,17 @@ router.delete("/:id", authenticate, async (req, res) => {
   try {
     const location = await Location.findById(id);
     if (!location) {
-      return res.status(404).json({ message: "location not found" })
+      return res.status(404).json({ message: "Location not found" });
     }
-    if (!((location.createdBy.toString()) === (userId.toString()))) {
-      return res.status(401).json({ message: "you can only delete locations created by you." })
+    if (!(location.createdBy.toString() === userId.toString())) {
+      return res
+        .status(401)
+        .json({ message: "You can only delete locations created by you." });
     }
     await Location.findByIdAndRemove(id);
-    return res.status(200).json({ message: "location has been deleted." });
+    return res.status(200).json({ message: "Location has been deleted." });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(500).json(err);
   }
 });

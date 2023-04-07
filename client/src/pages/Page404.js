@@ -17,18 +17,18 @@ export default function Page404() {
         <title> 404 Page Not Found | Minimal UI</title>
       </Helmet>
 
-      <Container sx={{ mt: '200px', mx: 'auto', width: '100%'}}>
+      <Container sx={{ mt: '200px', mx: 'auto', width: '100%' }}>
         <MotionContainer>
           <m.div variants={varBounce().in}>
-            <Typography variant="h3" paragraph sx={{textAlign: 'center'}}>
+            <Typography variant="h3" paragraph sx={{ textAlign: 'center' }}>
               Sorry, page not found!
             </Typography>
           </m.div>
 
           <m.div variants={varBounce().in}>
             <Typography sx={{ color: 'text.secondary', textAlign: 'center' }}>
-              Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check your
-              spelling.
+              Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check
+              your spelling.
             </Typography>
           </m.div>
 
@@ -40,8 +40,14 @@ export default function Page404() {
               }}
             />
           </m.div>
-            
-          <Button to="/" sx={{margin: 0, position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} component={RouterLink} size="large" variant="contained">
+
+          <Button
+            to="/"
+            sx={{ margin: 0, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+            component={RouterLink}
+            size="large"
+            variant="contained"
+          >
             Go to Home
           </Button>
         </MotionContainer>

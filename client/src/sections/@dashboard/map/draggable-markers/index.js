@@ -28,42 +28,46 @@ function MapDraggableMarkers({ ...other }) {
   const handleMapClick = useCallback((e) => {
     setMarker({
       longitude: e.lngLat.lng,
-      latitude: e.lngLat.lat
-    })
+      latitude: e.lngLat.lat,
+    });
   });
 
   const handleMarkerClick = (e) => {
     e.originalEvent.stopPropagation();
-    setPopup(true)
-  }
+    setPopup(true);
+  };
 
   const handleSave = async (e) => {
-    e.preventDefault()
-    setSubmitting(true)
+    e.preventDefault();
+    setSubmitting(true);
     const address = e.target.address.value;
     try {
       const formData = {
         address,
         lat: marker.latitude,
-        long: marker.longitude
-      }
-      await axios.post('/locations',formData);
-      document.getElementById("address-form").reset();
+        long: marker.longitude,
+      };
+      await axios.post('/locations', formData);
+      document.getElementById('address-form').reset();
       setSubmitting(false);
       enqueueSnackbar('Create success!');
-      navigate(PATH_DASHBOARD.location.list)
+      navigate(PATH_DASHBOARD.location.list);
     } catch (error) {
-      toast.error(error.message || "An error occured", {
-        position: toast.POSITION.TOP_RIGHT
+      toast.error(error.message || 'An error occured', {
+        position: toast.POSITION.TOP_RIGHT,
       });
-      document.getElementById("address-form").reset();
-      setSubmitting(false)
+      document.getElementById('address-form').reset();
+      setSubmitting(false);
     }
-  }
+  };
 
   return (
     <>
-      <Map initialViewState={{ latitude: marker.latitude, longitude: marker.longitude, zoom: 12 }} onClick={handleMapClick} {...other}>
+      <Map
+        initialViewState={{ latitude: marker.latitude, longitude: marker.longitude, zoom: 12 }}
+        onClick={handleMapClick}
+        {...other}
+      >
         <MapControl />
         <MapMarker
           longitude={marker.longitude}
@@ -75,16 +79,14 @@ function MapDraggableMarkers({ ...other }) {
         />
 
         {popup && (
-          <MapPopup
-            latitude={marker.latitude}
-            longitude={marker.longitude}
-            onClose={() => setPopup(false)}
-          >
-            <Box sx={{
-              color: 'common.white',
-              p: '6px',
-              width: '240px'
-            }}>
+          <MapPopup latitude={marker.latitude} longitude={marker.longitude} onClose={() => setPopup(false)}>
+            <Box
+              sx={{
+                color: 'common.white',
+                p: '6px',
+                width: '240px',
+              }}
+            >
               <Typography component="div" variant="caption">
                 Lat: {marker.latitude.toFixed(6)}
               </Typography>
@@ -98,22 +100,22 @@ function MapDraggableMarkers({ ...other }) {
                     width: '140px',
                     marginTop: '6px',
                   }}
-                  type='text'
-                  name='address'
-                  placeholder='enter address'
+                  type="text"
+                  name="address"
+                  placeholder="enter address"
                   required
                 />
                 <br />
                 <button
-                  type='submit'
+                  type="submit"
                   style={{
                     width: '140px',
                     marginTop: '6px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                   disabled={submitting}
                 >
-                  save
+                  Save
                 </button>
               </form>
             </Box>

@@ -40,7 +40,7 @@ export default function GeneralAppPage() {
             <AppDetails title="Family" content={user.familyName} icon={'carbon:pedestrian-family'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3} style={{ marginLeft: '20px' }}>
+          <Grid item xs={12} sm={6} md={3} style={{ marginLeft: '50px' }}>
             <AppDetails title="Family ID" content={user.family} icon={'mdi:id-card-outline'} />
           </Grid>
         </Grid>
